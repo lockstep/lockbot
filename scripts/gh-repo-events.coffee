@@ -18,19 +18,19 @@ module.exports = (robot) ->
 
   _assignFirstReviewer = (data) ->
     reviewers = [
-      'ekkapob',
-      'gotzilaza',
-      'gunosk129',
-      'janklimo',
-      'n-thongjor',
-      'roonglit'
+      { ghName: 'ekkapob', slackName: 'ekkapob' },
+      { ghName: 'gotzilaza', slackName: 'kirati_tripler' },
+      { ghName: 'gunosk129', slackName: 'kantaphon_tripler' },
+      { ghName: 'janklimo', slackName: 'jan' },
+      { ghName: 'n-thongjor', slackName: 'nut' },
+      { ghName: 'roonglit', slackName: 'mac' }
     ]
 
     reviewer = reviewers[Math.floor(Math.random() * reviewers.length)]
     commentEndpoint = data.pull_request._links.comments.href
-    message = JSON.stringify(body: "@#{reviewer} You are the first reviewer!, please review. Type :+1: when you've done.")
+    message = JSON.stringify(body: "@#{reviewer.ghName} You are the first reviewer!, please review. Type :+1: when you've done.")
 
     robot.http(commentEndpoint)
          .header('Authorization', "token #{process.env.HUBOT_GITHUB_ACCESS_TOKEN}")
          .post(message) (err, res, body) ->
-           robot.messageRoom '#lootix', "Congrats! @#{reviewer}, you are the first reviewer of #{data.pull_request.html_url}"
+           robot.messageRoom '#lootix', "Congrats! @#{reviewer.slackName}, you are the first reviewer of #{data.pull_request.html_url}"
