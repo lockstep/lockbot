@@ -24,3 +24,9 @@ module.exports = (robot) ->
   , null, false, 'Asia/Bangkok'
 
   cronJob.start()
+
+  cronJob = new CronJob '00 18 * * 1-5', =>
+    robot.messageRoom '#general', '@here Hey, turn off air filter, NOW!!!'
+  , null, false, 'Asia/Bangkok'
+
+  cronJob.start()
