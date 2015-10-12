@@ -1,56 +1,24 @@
 CronJob = require('cron').CronJob
 
 module.exports = (robot) ->
+  # General Cron Tasks
   jobList = [
     { time: '30 10 * * 1-5', msg: '@channel Tea Time!' }
-    { time: '00 17 * * 5', msg: '@channel Beer & Pokdeng Time!' }
+    { time: '00 18 * * 1-5', msg: '@here Hey, turn off air filter, NOW!!!' }
   ]
 
-  # for job in jobList
-  #   cronJob = new CronJob job.time, =>
-  #     robot.messageRoom '#general', job.msg
-  #   , null, false, 'Asia/Bangkok'
-  #
-  #   cronJob.start()
+  jobList.forEach (job) ->
+    cronJob = new CronJob job.time, =>
+      robot.messageRoom '#general', job.msg
+    , null, false, 'Asia/Bangkok'
 
-  cronJob = new CronJob '30 10 * * 1-5', =>
-    robot.messageRoom '#general', '@channel Tea Time!'
-  , null, false, 'Asia/Bangkok'
+    cronJob.start()
 
-  cronJob.start()
+  # Farang Days
+  farangs = ['mac', 'kirati_tripler', 'kantaphon_tripler', 'ekkapob', 'nut']
+  farangs.forEach (farang, index) ->
+    cronJob = new CronJob "00 11 * * #{index + 1}", =>
+      robot.messageRoom '#general', "@channel @#{farang} is Farang! I bet you anything he will not understand Thai anymore!"
+    , null, false, 'Asia/Bangkok'
 
-  cronJob = new CronJob '00 18 * * 1-5', =>
-    robot.messageRoom '#general', '@here Hey, turn off air filter, NOW!!!'
-  , null, false, 'Asia/Bangkok'
-
-  cronJob.start()
-
-  cronJob = new CronJob '00 11 * * 1', =>
-    robot.messageRoom '#general', '@channel @mac is Farang! I bet you anything he will not understand Thai anymore!'
-  , null, false, 'Asia/Bangkok'
-
-  cronJob.start()
-
-  cronJob = new CronJob '00 11 * * 2', =>
-    robot.messageRoom '#general', '@channel @kirati_tripler is Farang! I bet you anything he will not understand Thai anymore!'
-  , null, false, 'Asia/Bangkok'
-
-  cronJob.start()
-
-  cronJob = new CronJob '00 11 * * 3', =>
-    robot.messageRoom '#general', '@channel @kantaphon_tripler is Farang! I bet you anything he will not understand Thai anymore!'
-  , null, false, 'Asia/Bangkok'
-
-  cronJob.start()
-
-  cronJob = new CronJob '00 11 * * 4', =>
-    robot.messageRoom '#general', '@channel @ekkapob is Farang! I bet you anything he will not understand Thai anymore!'
-  , null, false, 'Asia/Bangkok'
-
-  cronJob.start()
-
-  cronJob = new CronJob '00 11 * * 5', =>
-    robot.messageRoom '#general', '@channel @nut is Farang! I bet you anything he will not understand Thai anymore!'
-  , null, false, 'Asia/Bangkok'
-
-  cronJob.start()
+    cronJob.start()
